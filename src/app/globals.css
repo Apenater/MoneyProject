@@ -1,0 +1,185 @@
+@import "tailwindcss";
+
+:root {
+  --mp-black: #0b0b0b;
+  --mp-black-soft: #151412;
+  --mp-cream: #f3ecd9;
+  --mp-cream-soft: #e9e0c7;
+  --mp-red: #b3231c;
+  --mp-red-dark: #8c1b16;
+  --mp-gold: #d9b24c;
+  --mp-paper: #efe9de;
+  --mp-tape: #eaddb0;
+}
+
+@theme inline {
+  --color-mp-black: var(--mp-black);
+  --color-mp-black-soft: var(--mp-black-soft);
+  --color-mp-cream: var(--mp-cream);
+  --color-mp-cream-soft: var(--mp-cream-soft);
+  --color-mp-red: var(--mp-red);
+  --color-mp-red-dark: var(--mp-red-dark);
+  --color-mp-gold: var(--mp-gold);
+  --color-mp-paper: var(--mp-paper);
+  --color-mp-tape: var(--mp-tape);
+
+  --font-display: "Anton", sans-serif;
+  --font-serif: "Playfair Display", serif;
+  --font-sans: "Inter", sans-serif;
+}
+
+body {
+  background: var(--mp-black);
+  color: var(--mp-cream);
+  font-family: var(--font-sans);
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-serif-italic {
+  font-family: var(--font-serif);
+  font-style: italic;
+}
+
+.font-serif {
+  font-family: var(--font-serif);
+}
+
+/* ---- Film grain (site-wide, layered above everything) ---- */
+.grain-overlay {
+  position: relative;
+}
+
+.grain-overlay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.grain-fixed {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.09;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---- Paper backgrounds: real crumpled-paper photo tinted via blend modes ---- */
+.paper-cream {
+  background-color: var(--mp-cream);
+  background-image: url("/assets/paper_texture_cream.png");
+  background-size: 900px auto;
+  background-repeat: repeat;
+  background-blend-mode: multiply;
+}
+
+.paper-black {
+  background-color: var(--mp-black);
+  background-image: url("/assets/paper_texture_cream.png");
+  background-size: 1100px auto;
+  background-repeat: repeat;
+  background-blend-mode: soft-light;
+}
+
+.paper-black-soft {
+  background-color: var(--mp-black-soft);
+  background-image: url("/assets/paper_texture_cream.png");
+  background-size: 1100px auto;
+  background-repeat: repeat;
+  background-blend-mode: soft-light;
+}
+
+.text-outline-cream {
+  -webkit-text-stroke: 1.5px var(--mp-cream);
+  color: transparent;
+}
+
+/* ---- Torn paper edge on individual cards/photos ---- */
+.torn-edge {
+  clip-path: polygon(
+    0% 2%, 3% 0%, 8% 3%, 14% 0%, 20% 2%, 26% 0%, 32% 3%, 38% 0%, 44% 2%,
+    50% 0%, 56% 3%, 62% 0%, 68% 2%, 74% 0%, 80% 3%, 86% 0%, 92% 2%, 100% 0%,
+    100% 98%, 96% 100%, 90% 97%, 84% 100%, 78% 98%, 72% 100%, 66% 97%,
+    60% 100%, 54% 98%, 48% 100%, 42% 97%, 36% 100%, 30% 98%, 24% 100%,
+    18% 97%, 12% 100%, 6% 98%, 0% 100%
+  );
+}
+
+/* ---- Washi tape corner sticker for photos ---- */
+.tape::before {
+  content: "";
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  width: 72px;
+  height: 26px;
+  transform: translateX(-50%) rotate(-4deg);
+  background: repeating-linear-gradient(
+    45deg,
+    var(--mp-tape),
+    var(--mp-tape) 6px,
+    #ded09a 6px,
+    #ded09a 8px
+  );
+  opacity: 0.85;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  z-index: 20;
+}
+
+/* ---- Ticket / receipt perforated edge ---- */
+.ticket-edge-top {
+  background-image: radial-gradient(
+    circle at 12px 0px,
+    transparent 8px,
+    var(--mp-black) 8.5px
+  );
+  background-size: 24px 16px;
+  background-repeat: repeat-x;
+  background-position: top;
+}
+
+.ticket-edge-bottom {
+  background-image: radial-gradient(
+    circle at 12px 16px,
+    transparent 8px,
+    var(--mp-black) 8.5px
+  );
+  background-size: 24px 16px;
+  background-repeat: repeat-x;
+  background-position: bottom;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 22s linear infinite;
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0) rotate(var(--rot, 0deg)); }
+  50% { transform: translateY(-10px) rotate(var(--rot, 0deg)); }
+}
+
+.animate-float {
+  animation: float-slow 6s ease-in-out infinite;
+}
+
+::selection {
+  background: var(--mp-red);
+  color: var(--mp-cream);
+}
+
+html {
+  scroll-behavior: smooth;
+}
