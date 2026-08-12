@@ -91,6 +91,7 @@ export default function Hero() {
               src="/assets/icono_graffiti_dolar.png"
               alt="Ícono de dólar estilo graffiti, símbolo de Money Project"
               fill
+              unoptimized
               className="object-contain drop-shadow-[0_0_40px_rgba(217,178,76,0.25)]"
             />
           </div>
@@ -124,6 +125,7 @@ export default function Hero() {
               src="/assets/icono_disco_vinilo.png"
               alt="Ícono decorativo de disco de vinilo"
               fill
+              unoptimized
               className="object-contain"
             />
           </div>

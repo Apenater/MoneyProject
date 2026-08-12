@@ -115,7 +115,6 @@ export const INCLUSIVITY =
 
 export type Module = {
   badge: string;
-  icon: string;
   title: string;
   sessions: string;
   bullets: string[];
@@ -124,7 +123,6 @@ export type Module = {
 export const MODULES: Module[] = [
   {
     badge: "Módulo 1",
-    icon: "/assets/badge_clase1_mindset_abundante.png",
     title: "Finanzas personales",
     sessions: "2 sesiones · Mindset abundante y deudas",
     bullets: [
@@ -138,7 +136,6 @@ export const MODULES: Module[] = [
   },
   {
     badge: "Módulo 2",
-    icon: "/assets/badge_clase5_trading_acciones_etf.png",
     title: "Inversión en bolsa (Stocks y ETFs)",
     sessions: "2 sesiones · Trading práctico con acciones y ETF's",
     bullets: [
@@ -150,7 +147,6 @@ export const MODULES: Module[] = [
   },
   {
     badge: "Módulo 3",
-    icon: "/assets/badge_clase_criptomonedas.png",
     title: "Inversión en criptomonedas",
     sessions: "2 sesiones · El mundo de las criptomonedas desde cero",
     bullets: [

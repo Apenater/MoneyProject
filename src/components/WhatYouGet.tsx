@@ -27,6 +27,7 @@ export default function WhatYouGet() {
                     src="/assets/check_rojo_icono.png"
                     alt=""
                     fill
+                    unoptimized
                     className="object-contain"
                   />
                 </div>

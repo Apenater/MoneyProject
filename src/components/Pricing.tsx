@@ -76,21 +76,27 @@ export default function Pricing() {
               Early bid
             </span>
 
-            <span className="relative mt-3 flex items-end gap-2">
-              <ScribbleCircle strokeClassName="stroke-mp-gold/70" className="scale-[1.3]" />
+            <span className="mt-3 flex items-end gap-2">
               <span className="relative h-10 w-10">
                 <Image
                   src="/assets/icono_graffiti_dolar.png"
                   alt=""
                   fill
+                  unoptimized
                   className="object-contain"
                 />
               </span>
-              <span className="font-display text-6xl md:text-7xl text-mp-gold">
-                {PRICING.earlyBid}
+              <span className="relative inline-block">
+                <span className="relative font-display text-6xl md:text-7xl text-mp-gold">
+                  {PRICING.earlyBid}
+                </span>
+                <ScribbleCircle strokeClassName="stroke-mp-gold/70" />
+                <ScribbleStar
+                  className="absolute -right-5 -top-5 h-6 w-6"
+                  strokeClassName="stroke-mp-gold"
+                />
               </span>
               <span className="pb-2 text-mp-cream/50">p/p</span>
-              <ScribbleStar className="absolute -right-6 -top-4 h-6 w-6" strokeClassName="stroke-mp-gold" />
             </span>
 
             <p className="mt-4 max-w-sm text-xs text-mp-cream/40">

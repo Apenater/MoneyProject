@@ -74,6 +74,7 @@ export default function PresencialEvent() {
                       src={ally.logo}
                       alt={ally.name}
                       fill
+                      unoptimized
                       className="object-contain object-left"
                     />
                   </div>

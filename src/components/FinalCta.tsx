@@ -13,6 +13,7 @@ export default function FinalCta() {
           src="/assets/icono_graffiti_dolar_rotado.png"
           alt=""
           fill
+          unoptimized
           className="object-contain"
         />
       </div>
@@ -21,6 +22,7 @@ export default function FinalCta() {
           src="/assets/icono_graffiti_dolar.png"
           alt=""
           fill
+          unoptimized
           className="object-contain"
         />
       </div>
