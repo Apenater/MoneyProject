@@ -1,7 +1,6 @@
 "use client";
 
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
-import WhatsAppButton from "./WhatsAppButton";
 import BrandLockup from "./BrandLockup";
 import { usePastHero } from "@/hooks/usePastHero";
 
@@ -44,13 +43,14 @@ export default function Header() {
       inert={!visible}
       className="fixed top-0 inset-x-0 z-50 backdrop-blur-md bg-mp-black/70 border-b"
     >
-      <div className="mx-auto max-w-6xl px-5 md:px-8 h-16 flex items-center justify-between">
+      {/* Mark only, centred. The ask lives in the sticky bar along the
+          bottom edge, which appears on this same frame — two WhatsApp
+          buttons pinned to opposite edges of the viewport was the same
+          request competing with itself. */}
+      <div className="mx-auto max-w-6xl px-5 md:px-8 h-16 flex items-center justify-center">
         <a href="#top" className="flex items-center">
           <BrandLockup size="header" />
         </a>
-        <WhatsAppButton className="!px-4 !py-2 !text-xs">
-          Reservar
-        </WhatsAppButton>
       </div>
     </motion.header>
   );
