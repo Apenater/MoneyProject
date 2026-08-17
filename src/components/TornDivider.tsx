@@ -38,22 +38,28 @@ export default function TornDivider({
   const ref = useRef<HTMLDivElement>(null);
   const driftY = useParallax(ref, parallax ? 10 : 0);
 
+  // `flip` (rotate-180, a static class) and the scroll-linked `y` drift
+  // both resolve to the same `transform` property — if they ever landed
+  // on one element, Framer's inline transform would silently drop the
+  // class-based rotation. Keeping flip on a plain outer div and the
+  // parallax on an inner motion.div (which never sets rotate) means
+  // they can never collide, even if a future divider uses both.
   return (
-    <motion.div
-      ref={ref}
+    <div
       aria-hidden="true"
-      style={parallax ? { y: driftY } : undefined}
       className={`pointer-events-none w-full overflow-hidden leading-[0] ${
         flip ? "rotate-180" : ""
       } ${className}`}
     >
-      <svg
-        viewBox="0 0 1440 40"
-        preserveAspectRatio="none"
-        className="h-8 w-full md:h-10"
-      >
-        <path d={path} className={fillClassName} />
-      </svg>
-    </motion.div>
+      <motion.div ref={ref} style={parallax ? { y: driftY } : undefined}>
+        <svg
+          viewBox="0 0 1440 40"
+          preserveAspectRatio="none"
+          className="h-8 w-full md:h-10"
+        >
+          <path d={path} className={fillClassName} />
+        </svg>
+      </motion.div>
+    </div>
   );
 }
