@@ -1,9 +1,19 @@
+"use client";
+
+import { useRef } from "react";
+import { motion } from "framer-motion";
+import { useParallax } from "@/hooks/useParallax";
+
 type TornDividerProps = {
   /** Tailwind color token feeding the fill, e.g. "fill-mp-cream" */
   fillClassName: string;
   /** Which section this divider visually belongs to */
   flip?: boolean;
   className?: string;
+  /** Scroll-linked drift on the torn edge itself — reserved for the 2-3
+   *  transitions adjacent to a Nivel B/C moment (PFD R3: connective
+   *  tissue, not a new transition language applied to all 12 dividers). */
+  parallax?: boolean;
 };
 
 // Deterministic jagged path (no Math.random — stays stable across server/client renders).
@@ -19,14 +29,20 @@ export default function TornDivider({
   fillClassName,
   flip = false,
   className = "",
+  parallax = false,
 }: TornDividerProps) {
   const path =
     POINTS.map(([x, y], i) => `${i === 0 ? "M" : "L"}${x},${y}`).join(" ") +
     " L1440,40 L0,40 Z";
 
+  const ref = useRef<HTMLDivElement>(null);
+  const driftY = useParallax(ref, parallax ? 10 : 0);
+
   return (
-    <div
+    <motion.div
+      ref={ref}
       aria-hidden="true"
+      style={parallax ? { y: driftY } : undefined}
       className={`pointer-events-none w-full overflow-hidden leading-[0] ${
         flip ? "rotate-180" : ""
       } ${className}`}
@@ -38,6 +54,6 @@ export default function TornDivider({
       >
         <path d={path} className={fillClassName} />
       </svg>
-    </div>
+    </motion.div>
   );
 }

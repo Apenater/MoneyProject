@@ -30,18 +30,19 @@ export default function Pricing() {
               </p>
             </div>
             <div className="divide-y divide-dashed divide-mp-black/20 px-6 md:px-9">
-              {RECEIVE_TABLE.map((row) => (
-                <div
-                  key={row.label}
-                  className="flex items-center justify-between gap-4 py-4"
-                >
-                  <span className="text-sm md:text-base text-mp-black/80">
-                    {row.label}
-                  </span>
-                  <span className="shrink-0 font-display text-mp-red">
-                    ${row.value}
-                  </span>
-                </div>
+              {/* Rows print in one at a time as the receipt scrolls into
+                  view, instead of arriving as one flat block. */}
+              {RECEIVE_TABLE.map((row, i) => (
+                <Reveal key={row.label} delay={i * 0.06} y={10}>
+                  <div className="flex items-center justify-between gap-4 py-4">
+                    <span className="text-sm md:text-base text-mp-black/80">
+                      {row.label}
+                    </span>
+                    <span className="shrink-0 font-display text-mp-red">
+                      ${row.value}
+                    </span>
+                  </div>
+                </Reveal>
               ))}
             </div>
             <div className="ticket-edge-top pb-8 px-6 md:px-9 pt-5">

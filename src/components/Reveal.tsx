@@ -8,6 +8,11 @@ type RevealProps = {
   delay?: number;
   className?: string;
   y?: number;
+  /** Horizontal offset (px) to enter from — lets sections alternate
+   *  left/right instead of every block rising the same way (used by
+   *  Founders, ForWhom). Kept on the same primitive rather than a new
+   *  component: one shared reveal grammar, only parameters change. */
+  x?: number;
 };
 
 export default function Reveal({
@@ -15,6 +20,7 @@ export default function Reveal({
   delay = 0,
   className,
   y = 24,
+  x = 0,
 }: RevealProps) {
   // Framer Motion animates via JS, so the CSS-only prefers-reduced-motion
   // reset in globals.css can't reach it — this hook is the real off switch.
@@ -23,8 +29,8 @@ export default function Reveal({
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y: reduceMotion ? 0 : y }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, y: reduceMotion ? 0 : y, x: reduceMotion ? 0 : x }}
+      whileInView={{ opacity: 1, y: 0, x: 0 }}
       viewport={{ once: true, margin: "-80px" }}
       transition={{
         duration: reduceMotion ? 0 : 0.6,

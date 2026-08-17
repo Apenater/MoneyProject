@@ -13,7 +13,7 @@ export default function ForWhom() {
         </Reveal>
 
         <div className="grid md:grid-cols-2 gap-8">
-          <Reveal>
+          <Reveal x={-24}>
             <div className="tape relative torn-edge bg-white/70 p-7 pt-9 shadow-[6px_10px_0_rgba(0,0,0,0.08)] -rotate-1">
               <h3 className="font-display text-xl uppercase text-mp-red mb-5">
                 Es para ti si...
@@ -29,7 +29,7 @@ export default function ForWhom() {
             </div>
           </Reveal>
 
-          <Reveal delay={0.1}>
+          <Reveal delay={0.1} x={24}>
             <div className="tape relative torn-edge bg-mp-black text-mp-cream p-7 pt-9 shadow-[6px_10px_0_rgba(0,0,0,0.25)] rotate-1">
               <h3 className="font-display text-xl uppercase text-mp-cream/80 mb-5">
                 No es para ti si...

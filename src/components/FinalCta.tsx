@@ -40,6 +40,8 @@ export default function FinalCta() {
               <ScribbleUnderline
                 className="absolute left-0 -bottom-3 w-full"
                 strokeClassName="stroke-mp-gold"
+                animate
+                delay={0.4}
               />
             </span>
           </h2>

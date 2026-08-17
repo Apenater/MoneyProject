@@ -26,7 +26,7 @@ export default function Founders() {
 
         <div className="mt-16 grid gap-14 sm:grid-cols-3">
           {FOUNDERS.map((founder, i) => (
-            <Reveal key={founder.name} delay={i * 0.1}>
+            <Reveal key={founder.name} delay={i * 0.1} x={i % 2 === 0 ? -20 : 20}>
               <div className="group flex flex-col items-center">
                 <TapedPhoto
                   src={founder.photo}

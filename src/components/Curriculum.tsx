@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { useRef, useState } from "react";
+import { motion, AnimatePresence, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import Reveal from "./Reveal";
 import TornDivider from "./TornDivider";
 import { MODULES, MODALITY } from "@/lib/content";
@@ -48,6 +48,16 @@ const MODULE_ICONS = [IconMindset, IconChart, IconCrypto];
 export default function Curriculum() {
   const [open, setOpen] = useState(0);
   const reduceMotion = useReducedMotion();
+  const listRef = useRef<HTMLDivElement>(null);
+  // "El viaje que recorrés" gets a literal progress spine: a line that
+  // grows with scroll instead of the accordion's own click-driven state
+  // (no pinning here — stacking a scroll-jack on top of an existing
+  // click interaction would fight the user's own input, see PFD R1/R4).
+  const { scrollYProgress } = useScroll({
+    target: listRef,
+    offset: ["start center", "end center"],
+  });
+  const spineScale = useTransform(scrollYProgress, [0, 1], reduceMotion ? [1, 1] : [0, 1]);
 
   return (
     <section id="programa" className="paper-black relative py-24 md:py-32">
@@ -64,7 +74,16 @@ export default function Curriculum() {
           </p>
         </Reveal>
 
-        <div className="mt-14 space-y-7">
+        <div ref={listRef} className="relative mt-14 space-y-7">
+          <div
+            aria-hidden="true"
+            className="absolute -left-4 top-0 bottom-0 hidden w-px bg-mp-cream/10 md:block"
+          >
+            <motion.div
+              style={{ scaleY: spineScale }}
+              className="h-full w-full origin-top bg-mp-gold/70"
+            />
+          </div>
           {MODULES.map((mod, i) => {
             const isOpen = open === i;
             return (
@@ -134,6 +153,7 @@ export default function Curriculum() {
       <TornDivider
         fillClassName="fill-mp-cream"
         className="absolute bottom-0 left-0"
+        parallax
       />
     </section>
   );

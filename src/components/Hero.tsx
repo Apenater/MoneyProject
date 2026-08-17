@@ -1,15 +1,29 @@
+"use client";
+
+import { useRef } from "react";
 import Image from "next/image";
+import { motion, useReducedMotion } from "framer-motion";
 import WhatsAppButton from "./WhatsAppButton";
 import RedOval from "./RedOval";
 import TornDivider from "./TornDivider";
 import { ScribbleArrow, ScribbleUnderline } from "./Scribble";
 import { KEY_DATES, PRICING, TAGLINE_EDUCATION } from "@/lib/content";
 import { countdownLabel } from "@/lib/dates";
+import { useParallax } from "@/hooks/useParallax";
 
 export default function Hero() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const reduceMotion = useReducedMotion();
+  // The one parallax layer this hero gets (PFD R1 budget: ghost type +
+  // the two staggering photos below is already 2-3 moving layers, the
+  // cap for a single viewport) — a slow drift that reads as depth
+  // without ever approaching the WhatsApp CTA's bounding box.
+  const ghostY = useParallax(sectionRef, 50);
+
   return (
     <section
       id="top"
+      ref={sectionRef}
       className="relative overflow-hidden bg-mp-black pt-32 pb-24 md:pt-40 md:pb-32"
     >
       <div className="pointer-events-none absolute inset-0 opacity-40">
@@ -17,13 +31,14 @@ export default function Hero() {
         <div className="absolute top-1/3 -right-16 h-80 w-80 rounded-full bg-mp-gold/10 blur-3xl" />
       </div>
 
-      {/* Giant ghost type for depth */}
-      <span
+      {/* Giant ghost type for depth — the hero's one scroll-linked parallax layer */}
+      <motion.span
         aria-hidden="true"
+        style={{ y: ghostY }}
         className="pointer-events-none absolute -top-6 left-1/2 -translate-x-1/2 font-display text-[6rem] leading-none text-mp-cream/[0.035] select-none whitespace-nowrap sm:text-[13rem] md:text-[20rem]"
       >
         $$$
-      </span>
+      </motion.span>
 
       <div className="relative mx-auto max-w-6xl px-5 md:px-8 grid md:grid-cols-[1.1fr_0.9fr] gap-12 items-center">
         <div>
@@ -42,6 +57,8 @@ export default function Hero() {
               <ScribbleUnderline
                 className="absolute -bottom-2 left-0"
                 strokeClassName="stroke-mp-red"
+                animate
+                delay={0.5}
               />
             </span>
             <br />
@@ -49,11 +66,18 @@ export default function Hero() {
           </h1>
 
           <div className="mt-5 flex items-center gap-3">
-            <RedOval className="text-lg md:text-xl px-6 py-1.5">
-              <span className="font-serif-italic capitalize">
-                {countdownLabel(KEY_DATES.startDateISO)}
-              </span>
-            </RedOval>
+            {/* Subtle idle pulse — the badge is allowed its own small
+                life since it's not the CTA itself, just a neighbor. */}
+            <motion.div
+              animate={reduceMotion ? undefined : { scale: [1, 1.035, 1] }}
+              transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <RedOval className="text-lg md:text-xl px-6 py-1.5">
+                <span className="font-serif-italic capitalize">
+                  {countdownLabel(KEY_DATES.startDateISO)}
+                </span>
+              </RedOval>
+            </motion.div>
             <span className="hidden sm:block text-2xl rotate-12 text-mp-cream/40">
               ✦
             </span>
@@ -99,7 +123,16 @@ export default function Hero() {
             />
           </div>
 
-          <div className="tape absolute -top-2 left-0 w-32 -rotate-[10deg] torn-edge shadow-2xl overflow-hidden bg-mp-cream p-1.5">
+          {/* The hero is the one 50ms-gate moment that gets its best
+              choreography (PFD R2) — the two photos land with a
+              staggered settle instead of appearing flat, on-mount since
+              they're above the fold from frame one (not whileInView). */}
+          <motion.div
+            initial={reduceMotion ? false : { opacity: 0, scale: 0.85, rotate: -24 }}
+            animate={{ opacity: 1, scale: 1, rotate: -10 }}
+            transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+            className="tape absolute -top-2 left-0 w-32 torn-edge shadow-2xl overflow-hidden bg-mp-cream p-1.5"
+          >
             <Image
               src="/assets/foto_billete_1_dolar_arrugado.png"
               alt="Billete de un dólar arrugado"
@@ -107,9 +140,14 @@ export default function Hero() {
               height={250}
               className="h-auto w-full object-cover"
             />
-          </div>
+          </motion.div>
 
-          <div className="tape absolute bottom-0 right-0 w-40 rotate-[8deg] torn-edge shadow-2xl overflow-hidden bg-mp-cream p-1.5">
+          <motion.div
+            initial={reduceMotion ? false : { opacity: 0, scale: 0.85, rotate: 22 }}
+            animate={{ opacity: 1, scale: 1, rotate: 8 }}
+            transition={{ duration: 0.7, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            className="tape absolute bottom-0 right-0 w-40 torn-edge shadow-2xl overflow-hidden bg-mp-cream p-1.5"
+          >
             <Image
               src="/assets/foto_billete_100_franklin_rasgado.png"
               alt="Billete de cien dólares con retrato de Franklin"
@@ -117,7 +155,7 @@ export default function Hero() {
               height={280}
               className="h-auto w-full object-cover"
             />
-          </div>
+          </motion.div>
 
           {/* Kept off-white/bordered rather than solid gold so it doesn't
               compete with the RedOval pill as a second "accent color"
@@ -141,6 +179,7 @@ export default function Hero() {
       <TornDivider
         fillClassName="fill-mp-black-soft"
         className="absolute bottom-0 left-0"
+        parallax
       />
     </section>
   );

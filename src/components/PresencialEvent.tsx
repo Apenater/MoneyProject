@@ -8,9 +8,14 @@ import { PRESENCIAL_EVENT, KEY_DATES, ALLIES } from "@/lib/content";
 export default function PresencialEvent() {
   return (
     <section className="paper-cream relative text-mp-black py-24 md:py-32">
-      <div className="mx-auto max-w-6xl px-5 md:px-8 grid md:grid-cols-2 gap-16 items-center">
+      <div className="mx-auto max-w-6xl px-5 md:px-8 grid md:grid-cols-2 gap-16 md:items-start">
         <Reveal>
-          <div className="relative h-[420px] md:h-[480px]">
+          {/* The site's one "pinned" moment (PFD R4) — done as plain CSS
+              sticky rather than JS scroll-jacking: the collage holds its
+              position while the aspirational copy scrolls past it, same
+              felt effect as an Apple-style pin, none of the convention
+              -breaking cost (scroll still maps 1:1 to content, always). */}
+          <div className="relative h-[420px] md:sticky md:top-28 md:h-[480px]">
             <TapedPhoto
               src="/assets/foto_evento_presencial.png"
               alt="Evento presencial de Money Project"
@@ -95,6 +100,7 @@ export default function PresencialEvent() {
       <TornDivider
         fillClassName="fill-mp-black"
         className="absolute bottom-0 left-0"
+        parallax
       />
     </section>
   );

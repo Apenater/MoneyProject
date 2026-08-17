@@ -1,3 +1,7 @@
+"use client";
+
+import { motion, useReducedMotion } from "framer-motion";
+
 type ScribbleProps = {
   className?: string;
   strokeClassName?: string;
@@ -6,7 +10,12 @@ type ScribbleProps = {
 export function ScribbleUnderline({
   className = "",
   strokeClassName = "stroke-mp-red",
-}: ScribbleProps) {
+  animate = false,
+  delay = 0.3,
+}: ScribbleProps & { animate?: boolean; delay?: number }) {
+  const reduceMotion = useReducedMotion();
+  const draw = animate && !reduceMotion;
+
   return (
     <svg
       viewBox="0 0 200 16"
@@ -14,12 +23,16 @@ export function ScribbleUnderline({
       className={`h-3 w-full ${className}`}
       aria-hidden="true"
     >
-      <path
+      <motion.path
         d="M2 10.5C40 4 80 14 100 8C130 -1 160 13 198 6"
         fill="none"
         className={strokeClassName}
         strokeWidth="4"
         strokeLinecap="round"
+        initial={draw ? { pathLength: 0 } : false}
+        whileInView={draw ? { pathLength: 1 } : undefined}
+        viewport={{ once: true, margin: "-80px" }}
+        transition={{ duration: 0.7, delay, ease: "easeInOut" }}
       />
     </svg>
   );
