@@ -1,8 +1,9 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import WhatsAppButton from "./WhatsAppButton";
-import { BRAND } from "@/lib/content";
+import BrandLockup from "./BrandLockup";
+import { usePastHero } from "@/hooks/usePastHero";
 
 export default function Header() {
   // A single page-level scroll listener (Framer's useScroll is already
@@ -18,24 +19,34 @@ export default function Header() {
   );
   const borderOpacity = useTransform(elevation, [0, 1], [0.1, 0.25]);
 
-  // Deliberately just the wordmark and the one CTA: no section links, no
-  // mobile menu. The page is a single linear pitch that ends in one ask,
-  // so anything else up here is a competing exit. The section ids
-  // (#programa / #precio / #faq) stay in place for deep links — the
-  // scroll-padding-top in globals.css still clears this header for them.
+  // Hidden for the whole hero: the hero carries the lockup at full size,
+  // so a second, smaller copy of the same mark pinned above it was the
+  // brand competing with itself. The header is the mark's *scrolled*
+  // state — it arrives only once the big one is gone.
+  const reduceMotion = useReducedMotion();
+  const visible = usePastHero();
+
   return (
     <motion.header
       style={{ boxShadow, borderColor: useTransform(borderOpacity, (v) => `rgba(243,236,217,${v})`) }}
+      initial={false}
+      animate={{
+        y: visible ? 0 : "-100%",
+        opacity: visible ? 1 : 0,
+      }}
+      transition={{
+        duration: reduceMotion ? 0 : 0.45,
+        ease: [0.22, 1, 0.36, 1],
+      }}
+      // Hidden means hidden: without inert the Reservar link stays in the
+      // tab order the whole time it is translated off-screen, so a
+      // keyboard user's first Tab lands on a control they cannot see.
+      inert={!visible}
       className="fixed top-0 inset-x-0 z-50 backdrop-blur-md bg-mp-black/70 border-b"
     >
       <div className="mx-auto max-w-6xl px-5 md:px-8 h-16 flex items-center justify-between">
-        <a href="#top" className="flex items-center gap-2">
-          <span className="font-display text-lg md:text-xl tracking-tight">
-            {BRAND.name}
-          </span>
-          <span className="rounded-full bg-mp-red px-2 py-0.5 text-[10px] md:text-xs font-semibold -rotate-3">
-            {BRAND.suffix}
-          </span>
+        <a href="#top" className="flex items-center">
+          <BrandLockup size="header" />
         </a>
         <WhatsAppButton className="!px-4 !py-2 !text-xs">
           Reservar

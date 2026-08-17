@@ -4,6 +4,7 @@ import { useRef } from "react";
 import Image from "next/image";
 import { motion, useReducedMotion, type Variants } from "framer-motion";
 import WhatsAppButton from "./WhatsAppButton";
+import BrandLockup from "./BrandLockup";
 import RedOval from "./RedOval";
 import TornDivider from "./TornDivider";
 import { ScribbleArrow, ScribbleUnderline } from "./Scribble";
@@ -31,7 +32,10 @@ export default function Hero() {
     visible: {
       transition: {
         staggerChildren: reduceMotion ? 0 : 0.1,
-        delayChildren: reduceMotion ? 0 : 0.05,
+        // Held back so the masthead lands before the cascade starts
+        // rather than alongside it — the nameplate is the first thing
+        // you read, and this keeps the "~2 blocks in flight" ceiling.
+        delayChildren: reduceMotion ? 0 : 0.28,
       },
     },
   };
@@ -48,7 +52,12 @@ export default function Hero() {
     <section
       id="top"
       ref={sectionRef}
-      className="relative overflow-hidden bg-mp-black pt-32 pb-24 md:pt-40 md:pb-32"
+      // Top padding is much tighter than it looks like it should be: it
+      // used to clear the fixed header, and there is no header here any
+      // more. The masthead needs the room instead, and the primary CTA
+      // has to stay above the fold on a laptop — it had slipped ~80px
+      // below it once the nameplate went in.
+      className="relative overflow-hidden bg-mp-black pt-14 pb-24 md:pt-16 md:pb-32"
     >
       <motion.div
         initial={reduceMotion ? false : { opacity: 0, scale: 0.92 }}
@@ -76,6 +85,20 @@ export default function Hero() {
           $$$
         </motion.span>
       </div>
+
+      {/* Masthead. The header is deliberately absent for the whole hero,
+          so this is the only place the mark appears at full size — set
+          like a newspaper nameplate, which is the language the rest of
+          the page already speaks (torn clippings, receipts, washi tape).
+          Scrolling past it hands the mark over to the header. */}
+      <motion.div
+        initial={reduceMotion ? false : { opacity: 0, y: -14 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: reduceMotion ? 0 : 0.6, ease: [0.22, 1, 0.36, 1] }}
+        className="relative mx-auto mb-8 max-w-6xl px-5 text-center md:mb-12 md:px-8"
+      >
+        <BrandLockup size="hero" />
+      </motion.div>
 
       <div className="relative mx-auto max-w-6xl px-5 md:px-8 grid md:grid-cols-[1.1fr_0.9fr] gap-12 items-center">
         <motion.div variants={container} initial="hidden" animate="visible">

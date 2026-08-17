@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import WhatsAppButton from "./WhatsAppButton";
+import { usePastHero } from "@/hooks/usePastHero";
 import { PRICING } from "@/lib/content";
 
 // Desktop's counterpart to FloatingWhatsApp (mobile-only): once the hero
@@ -12,18 +13,15 @@ import { PRICING } from "@/lib/content";
 // so the bar would just be a redundant second ask stacked on top of it.
 export default function StickyCtaBar() {
   const reduceMotion = useReducedMotion();
-  const [pastHero, setPastHero] = useState(false);
+  // Shared with the header so both arrive on the same frame — leaving
+  // the hero should read as one handoff, not two separate arrivals.
+  const pastHero = usePastHero();
   const [reachedPricing, setReachedPricing] = useState(false);
 
   useEffect(() => {
-    const hero = document.getElementById("top");
     const pricing = document.getElementById("precio");
-    if (!hero || !pricing) return;
+    if (!pricing) return;
 
-    const heroObserver = new IntersectionObserver(
-      ([entry]) => setPastHero(!entry.isIntersecting),
-      { rootMargin: "-10% 0px 0px 0px" }
-    );
     const pricingObserver = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) setReachedPricing(true);
@@ -31,12 +29,8 @@ export default function StickyCtaBar() {
       { rootMargin: "0px" }
     );
 
-    heroObserver.observe(hero);
     pricingObserver.observe(pricing);
-    return () => {
-      heroObserver.disconnect();
-      pricingObserver.disconnect();
-    };
+    return () => pricingObserver.disconnect();
   }, []);
 
   const visible = pastHero && !reachedPricing;
