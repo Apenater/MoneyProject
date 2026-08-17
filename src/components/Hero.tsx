@@ -179,6 +179,8 @@ export default function Hero() {
                 alt="Ícono de dólar estilo graffiti, símbolo de Money Project"
                 fill
                 unoptimized
+                loading="eager"
+                sizes="208px"
                 className="object-contain drop-shadow-[0_0_40px_rgba(217,178,76,0.25)]"
               />
             </motion.div>
@@ -192,30 +194,41 @@ export default function Hero() {
             initial={reduceMotion ? false : { opacity: 0, scale: 0.85, rotate: -24 }}
             animate={{ opacity: 1, scale: 1, rotate: -10 }}
             transition={{ duration: 0.7, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="tape absolute -top-2 left-0 w-32 torn-edge shadow-2xl overflow-hidden bg-mp-cream p-1.5"
+            className="tape absolute -top-2 left-0 w-32"
           >
-            <Image
-              src="/assets/foto_billete_1_dolar_arrugado.png"
-              alt="Billete de un dólar arrugado"
-              width={200}
-              height={250}
-              className="h-auto w-full object-cover"
-            />
+            {/* torn-edge (a clip-path) and overflow-hidden used to sit on
+                the same element as .tape, so the washi tape above the
+                photo was being clipped off. Clip on the inner frame. */}
+            <div className="torn-edge overflow-hidden bg-mp-cream p-1.5 shadow-2xl">
+              <Image
+                src="/assets/foto_billete_1_dolar_arrugado.png"
+                alt="Billete de un dólar arrugado"
+                width={200}
+                height={250}
+                loading="eager"
+                sizes="128px"
+                className="h-auto w-full object-cover"
+              />
+            </div>
           </motion.div>
 
           <motion.div
             initial={reduceMotion ? false : { opacity: 0, scale: 0.85, rotate: 22 }}
             animate={{ opacity: 1, scale: 1, rotate: 8 }}
             transition={{ duration: 0.7, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
-            className="tape absolute bottom-0 right-0 w-40 torn-edge shadow-2xl overflow-hidden bg-mp-cream p-1.5"
+            className="tape absolute bottom-0 right-0 w-40"
           >
-            <Image
-              src="/assets/foto_billete_100_franklin_rasgado.png"
-              alt="Billete de cien dólares con retrato de Franklin"
-              width={220}
-              height={280}
-              className="h-auto w-full object-cover"
-            />
+            <div className="torn-edge overflow-hidden bg-mp-cream p-1.5 shadow-2xl">
+              <Image
+                src="/assets/foto_billete_100_franklin_rasgado.png"
+                alt="Billete de cien dólares con retrato de Franklin"
+                width={220}
+                height={280}
+                loading="eager"
+                sizes="160px"
+                className="h-auto w-full object-cover"
+              />
+            </div>
           </motion.div>
 
           {/* Kept off-white/bordered rather than solid gold so it doesn't

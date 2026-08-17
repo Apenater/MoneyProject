@@ -53,8 +53,13 @@ export default function FinalCta() {
             <WhatsAppButton className="!bg-mp-cream !text-mp-black hover:!bg-white">
               Reservar mi espacio por WhatsApp
             </WhatsAppButton>
+            {/* Was -top-16: 64px above the button, which put the arrow on
+                top of the date line and left it aiming at empty space to
+                the button's right. Moved beside the button and rotated so
+                it points down-left into it — the arrow's own path runs
+                top-to-bottom, so -60deg aims it at the target. */}
             <ScribbleArrow
-              className="absolute -right-16 -top-16 hidden md:block rotate-[-25deg] h-16 w-12"
+              className="absolute -right-20 top-1/2 hidden h-16 w-12 -translate-y-1/2 rotate-[-60deg] md:block"
               strokeClassName="stroke-mp-cream/70"
             />
           </div>

@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Reveal from "./Reveal";
 import TornDivider from "./TornDivider";
 import WhatsAppButton from "./WhatsAppButton";
@@ -56,9 +55,17 @@ export default function Pricing() {
                   <span className="font-display uppercase text-sm tracking-widest text-mp-black-dim">
                     Valor total
                   </span>
+                  {/* A 2px solid bar at -6deg across text-2xl digits made
+                      the total unreadable — and this is the number the
+                      whole value argument rests on. A hairline at a
+                      shallower angle still reads as struck through while
+                      leaving the figure legible. */}
                   <span className="relative font-display text-2xl text-mp-black-dim">
                     ${RECEIVE_TABLE_TOTAL.toFixed(2).replace(/\.00$/, "")}
-                    <span className="absolute left-0 top-1/2 h-[2px] w-full -rotate-6 bg-mp-red" />
+                    <span
+                      aria-hidden="true"
+                      className="absolute left-0 top-1/2 h-px w-full -rotate-3 bg-mp-red/75"
+                    />
                   </span>
                 </div>
               </div>
@@ -72,10 +79,18 @@ export default function Pricing() {
               <span className="text-sm uppercase tracking-widest text-mp-cream-dim">
                 Inversión real de inscripción
               </span>
-              <span className="relative font-display text-3xl text-mp-cream-dim">
-                ${PRICING.realPrice}{" "}
+              {/* The strike used to span the whole element, "p/p"
+                  included, which read as the unit being cancelled too.
+                  It now covers only the figure it actually voids. */}
+              <span className="font-display text-3xl text-mp-cream-dim">
+                <span className="relative">
+                  ${PRICING.realPrice}
+                  <span
+                    aria-hidden="true"
+                    className="absolute left-0 top-1/2 h-px w-full -rotate-3 bg-mp-red/75"
+                  />
+                </span>{" "}
                 <span className="text-base align-top">p/p</span>
-                <span className="absolute left-0 top-1/2 h-[2px] w-full -rotate-6 bg-mp-red" />
               </span>
 
               <span
@@ -85,15 +100,17 @@ export default function Pricing() {
                 Early bid
               </span>
 
-              <span className="mt-3 flex items-end gap-2">
-                <span className="relative h-10 w-10">
-                  <Image
-                    src="/assets/icono_graffiti_dolar.png"
-                    alt=""
-                    fill
-                    unoptimized
-                    className="object-contain"
-                  />
+              {/* The graffiti-dollar PNG rendered at 40px next to 72px
+                  gold digits: black-and-white against gold, its strokes
+                  too dense to resolve at that size, and the scribble oval
+                  crossing it. It read as a smudge rather than a currency
+                  mark. A typographic $ in the same gold matches how every
+                  other price on the page is set (receipt rows, $124.95,
+                  the sticky bar). The graffiti asset still carries the
+                  hero and final-CTA watermarks, where it has room. */}
+              <span className="mt-3 flex items-end gap-1.5">
+                <span className="pb-1 font-display text-3xl md:text-4xl text-mp-gold/85">
+                  $
                 </span>
                 <span className="relative inline-block">
                   <span className="relative font-display text-6xl md:text-7xl text-mp-gold">

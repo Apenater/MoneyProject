@@ -41,11 +41,15 @@ export default function PresencialEvent() {
         </Reveal>
 
         <Reveal delay={0.1}>
+          {/* The circle extends 12px past the label on every side, and the
+              date sat 4px under it — so the oval's lower arc landed on
+              "Junio – Julio 2026" and looked like it was circling the
+              wrong line. mt-4 clears the arc. */}
           <span className="relative inline-block text-xs uppercase tracking-widest text-mp-red">
             {KEY_DATES.eventLabel}
             <ScribbleCircle strokeClassName="stroke-mp-red/70" />
           </span>
-          <p className="text-xs uppercase tracking-widest text-mp-black-dim mt-1">
+          <p className="text-xs uppercase tracking-widest text-mp-black-dim mt-4">
             {KEY_DATES.eventWindow}
           </p>
           <h2 className="font-display uppercase text-3xl md:text-4xl mt-3 leading-tight">

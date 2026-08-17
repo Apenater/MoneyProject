@@ -8,6 +8,12 @@ type TapedPhotoProps = {
   className?: string;
   aspect?: string;
   sizes?: string;
+  /** "cover" fills the frame and crops the overflow — right for photos,
+   *  wrong for artwork whose edges carry meaning (the founders' newspaper
+   *  clippings have their names set across the full width, so cropping
+   *  the sides truncated them). "contain" mats the whole image inside the
+   *  frame instead, which the cream border already reads as. */
+  fit?: "cover" | "contain";
 };
 
 export default function TapedPhoto({
@@ -18,6 +24,7 @@ export default function TapedPhoto({
   className = "",
   aspect = "aspect-[4/5]",
   sizes,
+  fit = "cover",
 }: TapedPhotoProps) {
   return (
     <div
@@ -33,7 +40,7 @@ export default function TapedPhoto({
             alt={alt}
             fill
             sizes={sizes}
-            className="object-cover"
+            className={fit === "contain" ? "object-contain" : "object-cover"}
           />
         </div>
       </div>

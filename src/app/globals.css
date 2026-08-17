@@ -18,6 +18,12 @@
      WCAG AA failure the way opacity-derived "quiet" tokens do. */
   --mp-cream-dim: #aaa28c;
   --mp-black-dim: #463e30;
+
+  /* Brand red is only legible as *text* on the cream sections — on
+     mp-black-soft it lands at ~2.8:1, under the 3:1 floor. This lighter
+     red is the on-dark counterpart (~5.2:1 there), so red type keeps its
+     meaning ("no", "falso") without dropping out of the background. */
+  --mp-red-light: #e6564d;
 }
 
 @theme inline {
@@ -32,6 +38,7 @@
   --color-mp-tape: var(--mp-tape);
   --color-mp-cream-dim: var(--mp-cream-dim);
   --color-mp-black-dim: var(--mp-black-dim);
+  --color-mp-red-light: var(--mp-red-light);
 
   --font-display: "Anton", sans-serif;
   --font-serif: "Playfair Display", serif;
@@ -190,8 +197,31 @@ body {
   color: var(--mp-cream);
 }
 
+/* ---- Keyboard focus ----
+   Nothing here styled :focus-visible, so keyboard users got Chrome's
+   default 1px #005fcc ring — off-palette, and thin enough to disappear
+   against the red CTAs and the black sections. A single colour can't
+   replace it: this page alternates between near-black (#0b0b0b) and
+   cream (#f3ecd9) backgrounds, and no one hue clears 3:1 against both.
+   Hence the two-part ring — the dark line carries contrast on cream and
+   on gold/red, the gold halo outside it carries contrast on black and
+   on red-dark. Whatever is behind the element, one of the two reads.
+   Unlayered on purpose: Tailwind's utilities live in @layer, so this
+   still wins over a component's own shadow-* class while focused. */
+:focus-visible {
+  outline: 2px solid var(--mp-black);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 5px var(--mp-gold);
+}
+
 html {
   scroll-behavior: smooth;
+  /* The header is fixed at 64px, so #programa / #precio / #faq were
+     landing with their first 64px tucked underneath it. scroll-padding
+     is what anchor navigation measures against; the bottom value keeps
+     the sticky CTA bar off the target the same way. */
+  scroll-padding-top: 5rem;
+  scroll-padding-bottom: 6rem;
 }
 
 /* ---- Motion safety net ----

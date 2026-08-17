@@ -13,11 +13,14 @@ export default function Founders() {
       <div className="mx-auto max-w-6xl px-5 md:px-8">
         <Reveal>
           <div className="flex items-center justify-center gap-3">
-            <ScribbleStar className="text-mp-gold/70" />
+            {/* ScribbleStar colours its path from strokeClassName, not from
+                a text-* class on the svg — both stars were rendering at
+                full stroke-mp-gold and ignoring the /70 asked for here. */}
+            <ScribbleStar strokeClassName="stroke-mp-gold/70" />
             <h2 className="font-serif-italic text-3xl md:text-4xl text-center">
               ¿Quiénes somos?
             </h2>
-            <ScribbleStar className="text-mp-gold/70 rotate-45" />
+            <ScribbleStar className="rotate-45" strokeClassName="stroke-mp-gold/70" />
           </div>
           <p className="mx-auto mt-4 max-w-2xl text-center text-mp-cream/75 text-base md:text-lg">
             {FOUNDERS_INTRO}
@@ -28,10 +31,20 @@ export default function Founders() {
           {FOUNDERS.map((founder, i) => (
             <Reveal key={founder.name} delay={i * 0.1} x={i % 2 === 0 ? -20 : 20}>
               <div className="group flex flex-col items-center">
+                {/* The three clippings ship at 0.88, 1.11 and 1.35 aspect
+                    ratios; forcing all of them into the default 4/5 frame
+                    cropped the two landscape ones hard enough to cut the
+                    names printed across them ("CARLOS RIVER", "AVIER
+                    PORTILLO"). A square frame sits near the middle of that
+                    spread, and contain keeps every headline intact — the
+                    cream border mats the leftover space. */}
                 <TapedPhoto
                   src={founder.photo}
                   alt={`Retrato de ${founder.name}, estilo recorte de periódico`}
                   rotate={ROTATIONS[i % ROTATIONS.length]}
+                  aspect="aspect-square"
+                  fit="contain"
+                  sizes="(min-width: 640px) 220px, 100vw"
                   className="w-full max-w-[220px] transition-transform duration-300 group-hover:rotate-0 group-hover:scale-[1.03]"
                 />
                 <p className="mt-6 text-center font-display text-lg tracking-wide">

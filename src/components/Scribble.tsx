@@ -43,9 +43,23 @@ export function ScribbleCircle({
   strokeClassName = "stroke-mp-gold",
 }: ScribbleProps) {
   return (
+    // preserveAspectRatio="none" because this is an "circle this text"
+    // mark, not a logo: without it the 2.2:1 oval was letterboxed inside
+    // whatever box it was given, so on wide-and-short labels it shrank to
+    // a narrow ellipse floating in the middle of the phrase (and dipped
+    // onto the line below). Stretching is the correct behaviour here.
+    // The explicit h-/w- calcs are not redundant with the insets: an SVG
+    // is a replaced element, so with height:auto its used height comes
+    // from the viewBox ratio (width / 2.2) and the bottom inset is simply
+    // dropped. On a wide, short label that made the oval ~80px tall for a
+    // 16px line — it stopped circling its own text and spilled onto the
+    // line below. Sizing it explicitly to inset+100% makes the box the
+    // insets describe, and preserveAspectRatio="none" lets the oval fill
+    // it (this is a "circle this phrase" mark, not a logo).
     <svg
       viewBox="0 0 220 100"
-      className={`pointer-events-none absolute -inset-x-4 -inset-y-3 ${className}`}
+      preserveAspectRatio="none"
+      className={`pointer-events-none absolute -inset-x-4 -inset-y-3 h-[calc(100%+1.5rem)] w-[calc(100%+2rem)] ${className}`}
       aria-hidden="true"
     >
       <path
@@ -54,6 +68,8 @@ export function ScribbleCircle({
         className={strokeClassName}
         strokeWidth="4"
         strokeLinecap="round"
+        // Keeps the pen weight even once the viewBox is stretched.
+        vectorEffect="non-scaling-stroke"
       />
     </svg>
   );

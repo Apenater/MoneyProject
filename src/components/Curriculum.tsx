@@ -88,61 +88,81 @@ export default function Curriculum() {
             const isOpen = open === i;
             return (
               <Reveal key={mod.title} delay={i * 0.08}>
+                {/* The badge hangs 12px above the card, but the card also
+                    needs overflow-hidden so the accordion's height
+                    animation doesn't spill — those two were on the same
+                    element, so every "MÓDULO N" pill got sliced off at
+                    the card's top edge. Splitting them: rotation and
+                    badge on an unclipped wrapper, clipping on the card. */}
                 <div
-                  className="relative bg-mp-cream/[0.04] border border-mp-cream/15 overflow-hidden shadow-[5px_8px_0_rgba(0,0,0,0.3)]"
+                  className="relative"
                   style={{ transform: `rotate(${ROTATIONS[i % ROTATIONS.length]}deg)` }}
                 >
-                  <span className="absolute -top-3 left-6 rounded-full bg-mp-red px-3 py-1 text-[10px] uppercase tracking-widest text-mp-cream -rotate-2 shadow-md">
+                  <span className="absolute -top-3 left-6 z-10 rounded-full bg-mp-red px-3 py-1 text-[10px] uppercase tracking-widest text-mp-cream -rotate-2 shadow-md">
                     {mod.badge}
                   </span>
-                  <button
-                    onClick={() => setOpen(isOpen ? -1 : i)}
-                    className="w-full flex items-center gap-5 px-5 pt-7 pb-5 text-left"
-                  >
-                    <div className="relative h-14 w-14 shrink-0 rounded-full bg-mp-cream/10 p-2.5 text-mp-gold">
-                      {(() => {
-                        const IconComp = MODULE_ICONS[i % MODULE_ICONS.length];
-                        return <IconComp className="h-full w-full" />;
-                      })()}
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="font-display uppercase text-lg md:text-xl mt-0.5">
-                        {mod.title}
-                      </h3>
-                      <p className="text-sm text-mp-cream-dim mt-0.5">
-                        {mod.sessions}
-                      </p>
-                    </div>
-                    <motion.span
-                      animate={{ rotate: isOpen ? 45 : 0 }}
-                      className="text-2xl text-mp-cream/60 font-light"
+                  <div className="relative overflow-hidden border border-mp-cream/15 bg-mp-cream/[0.04] shadow-[5px_8px_0_rgba(0,0,0,0.3)]">
+                    <button
+                      onClick={() => setOpen(isOpen ? -1 : i)}
+                      aria-expanded={isOpen}
+                      aria-controls={`modulo-panel-${i}`}
+                      className="w-full flex items-center gap-5 px-5 pt-7 pb-5 text-left"
                     >
-                      +
-                    </motion.span>
-                  </button>
-
-                  <AnimatePresence initial={false}>
-                    {isOpen && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: reduceMotion ? 0 : 0.3, ease: "easeInOut" }}
+                      <div className="relative h-14 w-14 shrink-0 rounded-full bg-mp-cream/10 p-2.5 text-mp-gold">
+                        {(() => {
+                          const IconComp = MODULE_ICONS[i % MODULE_ICONS.length];
+                          return <IconComp className="h-full w-full" />;
+                        })()}
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="font-display uppercase text-lg md:text-xl mt-0.5">
+                          {mod.title}
+                        </h3>
+                        <p className="text-sm text-mp-cream-dim mt-0.5">
+                          {mod.sessions}
+                        </p>
+                      </div>
+                      {/* Was a "+" rotated 45deg, which lands on "✕" — a
+                          dismiss glyph on a control that only collapses a
+                          panel. Two bars with the vertical one collapsing
+                          gives the +/− the action actually means. */}
+                      <span
+                        aria-hidden="true"
+                        className="relative block h-4 w-4 shrink-0 text-mp-cream/60"
                       >
-                        <ul className="px-5 pb-6 pl-[4.75rem] space-y-3 border-t border-dashed border-mp-cream/15 pt-4">
-                          {mod.bullets.map((bullet) => (
-                            <li
-                              key={bullet}
-                              className="flex gap-3 text-sm md:text-base text-mp-cream/80"
-                            >
-                              <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-mp-gold" />
-                              <span>{bullet}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
+                        <span className="absolute left-0 top-1/2 block h-0.5 w-full -translate-y-1/2 rounded-full bg-current" />
+                        <motion.span
+                          animate={{ scaleY: isOpen ? 0 : 1 }}
+                          transition={{ duration: reduceMotion ? 0 : 0.2 }}
+                          className="absolute left-1/2 top-0 block h-full w-0.5 -translate-x-1/2 rounded-full bg-current"
+                        />
+                      </span>
+                    </button>
+
+                    <AnimatePresence initial={false}>
+                      {isOpen && (
+                        <motion.div
+                          id={`modulo-panel-${i}`}
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: reduceMotion ? 0 : 0.3, ease: "easeInOut" }}
+                        >
+                          <ul className="px-5 pb-6 pl-[4.75rem] space-y-3 border-t border-dashed border-mp-cream/15 pt-4">
+                            {mod.bullets.map((bullet) => (
+                              <li
+                                key={bullet}
+                                className="flex gap-3 text-sm md:text-base text-mp-cream/80"
+                              >
+                                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-mp-gold" />
+                                <span>{bullet}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
                 </div>
               </Reveal>
             );
