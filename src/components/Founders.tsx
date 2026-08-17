@@ -48,8 +48,12 @@ export default function Founders() {
         </div>
       </div>
 
+      {/* Fill matches TrustBar's bg-mp-black-soft, which now follows
+          directly (TrustBar has its own perforated ticket-edge on top of
+          that, independent of this divider — two compatible textures,
+          not a color clash). */}
       <TornDivider
-        fillClassName="fill-mp-cream"
+        fillClassName="fill-mp-black-soft"
         className="absolute bottom-0 left-0"
       />
     </section>

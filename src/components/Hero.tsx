@@ -255,8 +255,11 @@ export default function Hero() {
         </div>
       </div>
 
+      {/* Fill matches whichever section comes next (the torn edge is
+          rendered as that section's color peeking through) — now Problem,
+          since it moved up to follow the hero directly. */}
       <TornDivider
-        fillClassName="fill-mp-black-soft"
+        fillClassName="fill-mp-cream"
         className="absolute bottom-0 left-0"
         parallax
       />

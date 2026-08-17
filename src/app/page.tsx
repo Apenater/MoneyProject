@@ -13,16 +13,24 @@ import Faq from "@/components/Faq";
 import FinalCta from "@/components/FinalCta";
 import Footer from "@/components/Footer";
 import FloatingWhatsApp from "@/components/FloatingWhatsApp";
+import ScrollProgress from "@/components/ScrollProgress";
+import StickyCtaBar from "@/components/StickyCtaBar";
 
 export default function Home() {
   return (
     <>
+      <ScrollProgress />
       <Header />
       <main className="flex-1">
         <Hero />
+        {/* Problem now follows the hook directly — while the headline's
+            attention is still highest is the right moment to name the
+            pain, before introducing who's going to fix it. Founders/
+            TrustBar used to sit between Hero and Problem, delaying the
+            emotional beat the copy is built around. */}
+        <Problem />
         <Founders />
         <TrustBar />
-        <Problem />
         <WhatYouGet />
         <ForWhom />
         <HonestNo />
@@ -34,6 +42,7 @@ export default function Home() {
       </main>
       <Footer />
       <FloatingWhatsApp />
+      <StickyCtaBar />
     </>
   );
 }
