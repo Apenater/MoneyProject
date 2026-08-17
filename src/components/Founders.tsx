@@ -30,7 +30,7 @@ export default function Founders() {
               <div className="group flex flex-col items-center">
                 <TapedPhoto
                   src={founder.photo}
-                  alt={`Recorte de periódico de ${founder.name}`}
+                  alt={`Retrato de ${founder.name}, estilo recorte de periódico`}
                   rotate={ROTATIONS[i % ROTATIONS.length]}
                   className="w-full max-w-[220px] transition-transform duration-300 group-hover:rotate-0 group-hover:scale-[1.03]"
                 />

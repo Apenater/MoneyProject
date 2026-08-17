@@ -5,7 +5,7 @@ import { PAIN_POINTS, PAIN_CONCLUSION } from "@/lib/content";
 export default function Problem() {
   return (
     <section className="paper-cream relative text-mp-black py-24 md:py-32">
-      <div className="mx-auto max-w-4xl px-5 md:px-8">
+      <div className="mx-auto max-w-3xl px-5 md:px-8">
         <Reveal>
           <h2 className="font-serif-italic text-3xl md:text-5xl text-center">
             Ganás dinero, pero…

@@ -3,7 +3,7 @@ import Reveal from "./Reveal";
 import TornDivider from "./TornDivider";
 import WhatsAppButton from "./WhatsAppButton";
 import { ScribbleCircle, ScribbleStar } from "./Scribble";
-import { RECEIVE_TABLE, PRICING } from "@/lib/content";
+import { RECEIVE_TABLE, RECEIVE_TABLE_TOTAL, PRICING } from "@/lib/content";
 
 export default function Pricing() {
   return (
@@ -25,7 +25,7 @@ export default function Pricing() {
             style={{ transform: "rotate(-1deg)" }}
           >
             <div className="ticket-edge-bottom pt-7 px-6 md:px-9 pb-4">
-              <p className="text-center font-display uppercase text-sm tracking-widest text-mp-black/50">
+              <p className="text-center font-display uppercase text-sm tracking-widest text-mp-black-dim">
                 ★ Detalle de tu inversión ★
               </p>
             </div>
@@ -46,11 +46,11 @@ export default function Pricing() {
             </div>
             <div className="ticket-edge-top pb-8 px-6 md:px-9 pt-5">
               <div className="flex items-center justify-between">
-                <span className="font-display uppercase text-sm tracking-widest text-mp-black/50">
+                <span className="font-display uppercase text-sm tracking-widest text-mp-black-dim">
                   Valor total
                 </span>
-                <span className="relative font-display text-2xl text-mp-black/40">
-                  ${PRICING.totalValue}
+                <span className="relative font-display text-2xl text-mp-black-dim">
+                  ${RECEIVE_TABLE_TOTAL.toFixed(2).replace(/\.00$/, "")}
                   <span className="absolute left-0 top-1/2 h-[2px] w-full -rotate-6 bg-mp-red" />
                 </span>
               </div>
@@ -60,10 +60,10 @@ export default function Pricing() {
 
         <Reveal delay={0.1}>
           <div className="mt-16 flex flex-col items-center gap-2 text-center">
-            <span className="text-sm uppercase tracking-widest text-mp-cream/50">
+            <span className="text-sm uppercase tracking-widest text-mp-cream-dim">
               Inversión real de inscripción
             </span>
-            <span className="relative font-display text-3xl text-mp-cream/50">
+            <span className="relative font-display text-3xl text-mp-cream-dim">
               ${PRICING.realPrice}{" "}
               <span className="text-base align-top">p/p</span>
               <span className="absolute left-0 top-1/2 h-[2px] w-full -rotate-6 bg-mp-red" />
@@ -96,10 +96,10 @@ export default function Pricing() {
                   strokeClassName="stroke-mp-gold"
                 />
               </span>
-              <span className="pb-2 text-mp-cream/50">p/p</span>
+              <span className="pb-2 text-mp-cream-dim">p/p</span>
             </span>
 
-            <p className="mt-4 max-w-sm text-xs text-mp-cream/40">
+            <p className="mt-4 max-w-sm text-xs text-mp-cream-dim">
               {PRICING.disclaimer}
             </p>
 

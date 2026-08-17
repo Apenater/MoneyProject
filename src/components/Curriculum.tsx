@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import Reveal from "./Reveal";
 import TornDivider from "./TornDivider";
 import { MODULES, MODALITY } from "@/lib/content";
@@ -47,10 +47,11 @@ const MODULE_ICONS = [IconMindset, IconChart, IconCrypto];
 
 export default function Curriculum() {
   const [open, setOpen] = useState(0);
+  const reduceMotion = useReducedMotion();
 
   return (
     <section id="programa" className="paper-black relative py-24 md:py-32">
-      <div className="mx-auto max-w-4xl px-5 md:px-8">
+      <div className="mx-auto max-w-3xl px-5 md:px-8">
         <Reveal>
           <p className="text-center font-serif-italic text-lg text-mp-gold mb-2">
             El viaje que recorrés en Money Project
@@ -89,7 +90,7 @@ export default function Curriculum() {
                       <h3 className="font-display uppercase text-lg md:text-xl mt-0.5">
                         {mod.title}
                       </h3>
-                      <p className="text-sm text-mp-cream/50 mt-0.5">
+                      <p className="text-sm text-mp-cream-dim mt-0.5">
                         {mod.sessions}
                       </p>
                     </div>
@@ -107,7 +108,7 @@ export default function Curriculum() {
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: "auto", opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.3, ease: "easeInOut" }}
+                        transition={{ duration: reduceMotion ? 0 : 0.3, ease: "easeInOut" }}
                       >
                         <ul className="px-5 pb-6 pl-[4.75rem] space-y-3 border-t border-dashed border-mp-cream/15 pt-4">
                           {mod.bullets.map((bullet) => (

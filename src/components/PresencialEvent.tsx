@@ -40,7 +40,7 @@ export default function PresencialEvent() {
             {KEY_DATES.eventLabel}
             <ScribbleCircle strokeClassName="stroke-mp-red/70" />
           </span>
-          <p className="text-xs uppercase tracking-widest text-mp-black/50 mt-1">
+          <p className="text-xs uppercase tracking-widest text-mp-black-dim mt-1">
             {KEY_DATES.eventWindow}
           </p>
           <h2 className="font-display uppercase text-3xl md:text-4xl mt-3 leading-tight">
@@ -63,7 +63,7 @@ export default function PresencialEvent() {
           </div>
 
           <div className="mt-9">
-            <p className="text-xs uppercase tracking-widest text-mp-black/50 mb-3">
+            <p className="text-xs uppercase tracking-widest text-mp-black-dim mb-3">
               Nuestros aliados
             </p>
             <div className="flex flex-wrap items-center gap-6">

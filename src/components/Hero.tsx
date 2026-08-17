@@ -4,6 +4,7 @@ import RedOval from "./RedOval";
 import TornDivider from "./TornDivider";
 import { ScribbleArrow, ScribbleUnderline } from "./Scribble";
 import { KEY_DATES, PRICING, TAGLINE_EDUCATION } from "@/lib/content";
+import { countdownLabel } from "@/lib/dates";
 
 export default function Hero() {
   return (
@@ -19,7 +20,7 @@ export default function Hero() {
       {/* Giant ghost type for depth */}
       <span
         aria-hidden="true"
-        className="pointer-events-none absolute -top-6 left-1/2 -translate-x-1/2 font-display text-[13rem] leading-none text-mp-cream/[0.035] select-none whitespace-nowrap md:text-[20rem]"
+        className="pointer-events-none absolute -top-6 left-1/2 -translate-x-1/2 font-display text-[6rem] leading-none text-mp-cream/[0.035] select-none whitespace-nowrap sm:text-[13rem] md:text-[20rem]"
       >
         $$$
       </span>
@@ -49,7 +50,9 @@ export default function Hero() {
 
           <div className="mt-5 flex items-center gap-3">
             <RedOval className="text-lg md:text-xl px-6 py-1.5">
-              <span className="font-serif-italic capitalize">-3 Semanas</span>
+              <span className="font-serif-italic capitalize">
+                {countdownLabel(KEY_DATES.startDateISO)}
+              </span>
             </RedOval>
             <span className="hidden sm:block text-2xl rotate-12 text-mp-cream/40">
               ✦
@@ -76,7 +79,7 @@ export default function Hero() {
             <ScribbleArrow className="hidden md:block -mt-8 -ml-2 rotate-[15deg] text-mp-red" />
           </div>
 
-          <div className="mt-8 flex flex-wrap items-center gap-6 text-xs uppercase tracking-wide text-mp-cream/50">
+          <div className="mt-8 flex flex-wrap items-center gap-6 text-xs uppercase tracking-wide text-mp-cream-dim">
             <span>Solo {PRICING.seatsLimit} cupos early bid</span>
             <span className="h-1 w-1 rounded-full bg-mp-cream/30" />
             <span>100% online por Zoom</span>
@@ -116,7 +119,10 @@ export default function Hero() {
             />
           </div>
 
-          <span className="absolute top-8 right-2 rounded-full bg-mp-gold px-3 py-1 text-[11px] font-semibold uppercase text-mp-black rotate-6 shadow-lg">
+          {/* Kept off-white/bordered rather than solid gold so it doesn't
+              compete with the RedOval pill as a second "accent color"
+              focal point in the hero (PFD L1: one dominant accent). */}
+          <span className="absolute top-8 right-2 rounded-full border border-mp-cream/40 bg-mp-black/60 px-3 py-1 text-[11px] font-semibold uppercase text-mp-cream backdrop-blur-sm rotate-6 shadow-lg">
             100% online
           </span>
 

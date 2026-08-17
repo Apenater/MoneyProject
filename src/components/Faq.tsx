@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import Reveal from "./Reveal";
 import TornDivider from "./TornDivider";
 import { ScribbleUnderline } from "./Scribble";
@@ -11,6 +11,7 @@ const ROTATIONS = [-0.8, 0.8, -0.6, 0.6];
 
 export default function Faq() {
   const [open, setOpen] = useState<number | null>(null);
+  const reduceMotion = useReducedMotion();
 
   return (
     <section id="faq" className="paper-cream relative text-mp-black py-24 md:py-32">
@@ -55,7 +56,7 @@ export default function Faq() {
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: "auto", opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.25 }}
+                        transition={{ duration: reduceMotion ? 0 : 0.25 }}
                       >
                         <p className="px-6 pb-6 border-t border-dashed border-mp-black/15 pt-4 text-sm md:text-base text-mp-black/70 leading-relaxed">
                           {item.answer}

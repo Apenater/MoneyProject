@@ -21,12 +21,15 @@ export const KEY_DATES = {
   presaleTime: "12:00 pm",
   startLabel: "Inicio del programa",
   startDate: "9 de febrero 2026",
+  // PLACEHOLDER — same date as startDate above, in ISO form. This is what
+  // the hero's countdown badge is computed from (see lib/dates.ts) — keep
+  // it in sync with startDate whenever the real program date is confirmed.
+  startDateISO: "2026-02-09T00:00:00-06:00",
   eventLabel: "Evento presencial",
   eventWindow: "Junio – Julio 2026",
 };
 
 export const PRICING = {
-  totalValue: 450,
   realPrice: 124.95,
   earlyBid: 99.99,
   currency: "$",
@@ -44,6 +47,19 @@ export const RECEIVE_TABLE = [
   { label: "Ebook premium de tarjetas de crédito (comprenderlas y usarlas a full)", value: 9.99 },
   { label: "Rifas de libros sobre crecimiento personal, finanzas y emprendimiento", value: "25–30" },
 ];
+
+// The receipt's "valor total" used to be a separate hardcoded number
+// (450) that didn't match what RECEIVE_TABLE's own line items add up to
+// (~407–409) — an itemized "we're not making these numbers up" receipt
+// whose own arithmetic didn't check out. Deriving it from the table
+// instead means it can never drift out of sync with its own line items
+// again. Range values (e.g. "25–30") count at their upper bound, the
+// normal convention for a "total value" framing.
+export const RECEIVE_TABLE_TOTAL = RECEIVE_TABLE.reduce((sum, row) => {
+  if (typeof row.value === "number") return sum + row.value;
+  const upperBound = Math.max(...row.value.split("–").map((n) => parseFloat(n.trim())));
+  return sum + upperBound;
+}, 0);
 
 export const FOUNDERS = [
   {

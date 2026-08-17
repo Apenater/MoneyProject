@@ -15,26 +15,28 @@ export default function Footer() {
                 {BRAND.suffix}
               </span>
             </div>
-            <p className="mt-2 text-sm text-mp-cream/50 max-w-sm">
+            <p className="mt-2 text-sm text-mp-cream-dim max-w-sm">
               {TAGLINE_EDUCATION}
             </p>
           </div>
 
-          <div className="border border-dashed border-mp-cream/15 px-4 py-3 text-xs text-mp-cream/40 space-y-1 max-w-xs">
+          <div className="border border-dashed border-mp-cream/15 px-4 py-3 text-xs text-mp-cream-dim space-y-1 max-w-xs">
             {LEGAL_DISCLAIMERS.map((d) => (
               <p key={d}>{d}</p>
             ))}
           </div>
         </div>
 
-        <div className="mt-10 flex flex-col sm:flex-row items-center justify-between gap-3 border-t border-dashed border-mp-cream/10 pt-6 text-xs text-mp-cream/35">
+        <div className="mt-10 flex flex-col sm:flex-row items-center justify-between gap-3 border-t border-dashed border-mp-cream/10 pt-6 text-xs text-mp-cream-dim">
           <p>
             © {new Date().getFullYear()} {BRAND.name} {BRAND.suffix} — Todos
             los derechos reservados.
           </p>
-          <a href="#" className="underline hover:text-mp-cream/60">
-            Términos y condiciones
-          </a>
+          {/* No terms page exists yet — a real link is added once one does.
+              A styled-as-inert label beats a "#" link that goes nowhere. */}
+          <span className="cursor-default opacity-70">
+            Términos y condiciones (próximamente)
+          </span>
         </div>
       </div>
     </footer>

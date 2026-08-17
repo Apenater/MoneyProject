@@ -8,7 +8,7 @@ const ROTATIONS = [-1.5, 1, -1, 1.5, -0.5];
 export default function WhatYouGet() {
   return (
     <section className="paper-black relative py-24 md:py-32">
-      <div className="mx-auto max-w-4xl px-5 md:px-8">
+      <div className="mx-auto max-w-3xl px-5 md:px-8">
         <Reveal>
           <h2 className="font-display uppercase text-3xl md:text-4xl text-center">
             Esto es lo que vas a lograr

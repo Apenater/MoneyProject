@@ -10,6 +10,14 @@
   --mp-gold: #d9b24c;
   --mp-paper: #efe9de;
   --mp-tape: #eaddb0;
+
+  /* "Quiet" text tones for secondary copy on top of mp-black / mp-cream.
+     Unlike text-mp-cream/40, text-mp-cream/50 etc (opacity utilities), these
+     are real hex values audited to stay >=4.5:1 against their intended
+     background (~7-9:1 with margin) so secondary text never drifts into
+     WCAG AA failure the way opacity-derived "quiet" tokens do. */
+  --mp-cream-dim: #aaa28c;
+  --mp-black-dim: #463e30;
 }
 
 @theme inline {
@@ -22,6 +30,8 @@
   --color-mp-gold: var(--mp-gold);
   --color-mp-paper: var(--mp-paper);
   --color-mp-tape: var(--mp-tape);
+  --color-mp-cream-dim: var(--mp-cream-dim);
+  --color-mp-black-dim: var(--mp-black-dim);
 
   --font-display: "Anton", sans-serif;
   --font-serif: "Playfair Display", serif;
@@ -182,4 +192,26 @@ body {
 
 html {
   scroll-behavior: smooth;
+}
+
+/* ---- Motion safety net ----
+   The page is intentionally motion-rich (scroll reveals, an infinite
+   marquee, a floating icon, two animated accordions). Anyone with
+   prefers-reduced-motion set gets all of that collapsed to instant,
+   static states instead of just a shorter duration. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .animate-marquee,
+  .animate-float {
+    animation: none !important;
+  }
 }
